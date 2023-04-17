@@ -1,0 +1,46 @@
+$primary-light: #ff8686;
+$primary-almost-light: #d76367;
+$primary: #e23237;
+$primary-almost-dark: rgba(226, 50, 56, 0.92);
+$primary-dark: #b52e31;
+
+$secondary: #276fd4;
+$secondary-dark: darken($secondary, 15%);
+$secondary-darker: darken($secondary, 25%);
+
+$success: #80ff00;
+$success-darker: #54a700;
+$success-dark: #428400;
+
+$yellow: #ffc800;
+$yellow-dark: darken($yellow, 15%);
+
+$white: #ffffff;
+
+$neutral: (
+  darkest: #121212,
+  darker: #212121,
+  dark: #303030,
+  almost-dark: #424242,
+  almost-dark-lighter: #5e5e5e,
+  barely-dark: #888888,
+  almost-light: #dadada,
+  light: #f2f2f2,
+  lighter: #f9f9f9,
+  lightest: #ffffff,
+);
+
+$unit: 4px;
+$spacing: 8px;
+
+$sizes: (
+  xxsmall: 8px,
+  xsmall: 16px,
+  small: 24px,
+  normal: 32px,
+  medium: 48px,
+  xmedium: 64px,
+  large: 72px,
+  xlarge: 88px,
+  xxlarge: 112px,
+);
