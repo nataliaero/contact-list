@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
+import { Router } from '@angular/router';
+import { SessionService } from '../services';
+
 @Component({
   selector: 'app-home-component',
   template: `
@@ -14,5 +17,13 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit {
-  ngOnInit() {}
+  constructor(private sessionService: SessionService, private router: Router) {}
+
+  ngOnInit() {
+    const session = this.sessionService.getCurrentUserSession();
+
+    if (session) {
+      this.router.navigate(['contacts']);
+    }
+  }
 }

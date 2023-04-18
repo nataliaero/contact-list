@@ -11,7 +11,6 @@ const routes: Routes = [
   },
   {
     path: 'contacts',
-    pathMatch: 'full',
     loadChildren: () =>
       import('./contact/contact.module').then((mod) => mod.ContactModule),
     canActivate: [AuthGuard],
