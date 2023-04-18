@@ -6,12 +6,9 @@ import { Router } from '@angular/router';
   selector: 'app-bar',
   template: `
     <div class="app-bar">
-      <h3>Contact List</h3>
-      <img src="/assets/logoCuadrado.png" alt="Logo" />
+      <h3>My Contact List</h3>
 
-      <div class="app-bar-right">
-        <button>LOGIN</button>
-      </div>
+      <div class="app-bar-button">LOGIN</div>
     </div>
   `,
   styleUrls: ['./app-bar.component.scss'],

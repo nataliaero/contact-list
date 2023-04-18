@@ -1,0 +1,27 @@
+@import "../../theme/variables";
+
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  align-items: center;
+  padding-top: 120px;
+
+  img {
+    height: 300px;
+  }
+}
+
+.welcome-title {
+  font-size: 50px;
+  font-family: "Lobster";
+  color: $secondary;
+  margin-bottom: $spacing * 4;
+}
+
+.welcome-subtitle {
+  font-size: 25px;
+  font-family: "Josefin Sans";
+  color: $secondary;
+  margin-top: $spacing * 4;
+}
