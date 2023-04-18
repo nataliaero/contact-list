@@ -17,6 +17,12 @@
   font-family: "Lobster";
   color: $secondary;
   margin-bottom: $spacing * 4;
+  text-align: center;
+  line-height: $spacing * 6;
+
+  @media only screen and (max-width: 768px) {
+    font-size: 40px;
+  }
 }
 
 .welcome-subtitle {
@@ -24,4 +30,10 @@
   font-family: "Josefin Sans";
   color: $secondary;
   margin-top: $spacing * 4;
+  text-align: center;
+  line-height: $spacing * 3;
+
+  @media only screen and (max-width: 768px) {
+    font-size: 20px;
+  }
 }
