@@ -9,7 +9,9 @@ import { SessionService } from '../services';
   template: `
     <div class="app-bar">
       <h3>My Contact List</h3>
-      <div class="app-bar-button" (click)="onButtonClick()">LOGIN</div>
+      <div class="app-bar-button" (click)="onButtonClick()">
+        {{ buttonText$ | async }}
+      </div>
     </div>
   `,
   styleUrls: ['./app-bar.component.scss'],
@@ -18,18 +20,28 @@ import { SessionService } from '../services';
 export class AppBarComponent implements OnInit {
   constructor(private sessionService: SessionService, private router: Router) {}
 
-  loginText = 'LOGIN';
-  logoutText = 'LOGOUT';
+  login = 'LOGIN';
+  logout = 'LOGOUT';
 
-  buttonText$ = new BehaviorSubject<string>(this.loginText);
+  buttonText$ = new BehaviorSubject<string>(this.login);
 
   ngOnInit() {
     const text = this.sessionService.getCurrentUserSession()
-      ? this.logoutText
-      : this.loginText;
+      ? this.logout
+      : this.login;
 
     this.buttonText$.next(text);
   }
 
-  onButtonClick() {}
+  onButtonClick() {
+    if (this.buttonText$.value === this.login) {
+      this.sessionService.saveCurrentUserSession({ loginDate: Date.now() });
+      this.buttonText$.next(this.logout);
+      this.router.navigate(['/contacts']);
+    } else {
+      this.sessionService.deleteCurrentUserSession();
+      this.buttonText$.next(this.login);
+      this.router.navigate(['/home']);
+    }
+  }
 }
