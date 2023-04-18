@@ -55,6 +55,110 @@
       "address": "6 Pl. des Bas Longchamps, 92200 Bagneux, France",
       "email": "james.donos42@gmail.com",
       "phoneNumber": "003978923476"
+    },
+    {
+      "id": "e434b594-76fa-4e0f-a489-7ea8a3be1081",
+      "name": "Mary Ann",
+      "surname": "Williams",
+      "address": "Marzilistrasse 29, 3005 Bern, Switzerland",
+      "email": "mary_ann1962@gmail.com",
+      "phoneNumber": "00418698800"
+    },
+    {
+      "id": "7c64592a-b203-40aa-b5f8-09e27225dade",
+      "name": "Jane",
+      "surname": "Thomas",
+      "address": "Bolligenstrasse 111, 3000 Bern, Switzerland",
+      "email": "jane.thomas@gmail.com",
+      "phoneNumber": "0041650982222"
+    },
+    {
+      "id": "0c53f00d-25e8-4fd4-b914-e8ebd6dbffcd",
+      "name": "Juliette",
+      "surname": "Bardor",
+      "address": "Tiefenaustrasse 112, 3004 Bern, Switzerland",
+      "email": "jane.thomas@gmail.com",
+      "phoneNumber": "0041650982233"
+    },
+    {
+      "id": "0c53f00d-25e8-4fd4-b914-e8ebd6dbffcd",
+      "name": "Garnier",
+      "surname": "Bardor",
+      "address": "Engehaldenstrasse 198, 3004 Bern, Switzerland",
+      "email": "garnier.bardor@gmail.com",
+      "phoneNumber": "0041609292894"
+    },
+    {
+      "id": "5ec6b9da-2a6d-4ca0-9821-a70ceafa7053",
+      "name": "Zoe",
+      "surname": "Manon",
+      "address": "Freudenreichstrasse 17, 3047 Bremgarten bei Bern, Switzerland",
+      "email": "zoe.manon@gmail.com",
+      "phoneNumber": "0041609292892"
+    },
+    {
+      "id": "fa7dbc72-9da5-437a-bfd1-f39b3d96711d",
+      "name": "Lea",
+      "surname": "Manon",
+      "address": "Freudenreichstrasse 17, 3047 Bremgarten bei Bern, Switzerland",
+      "email": "lea.manon@gmail.com",
+      "phoneNumber": "0041609292893"
+    },
+    {
+      "id": "04e9de9f-3ced-460a-a30e-9ea735fea30c",
+      "name": "Chloe",
+      "surname": "Rochefort",
+      "address": "Engehaldenstrasse 198, 3004 Bern, Switzerland",
+      "email": "garnier.bardor@gmail.com",
+      "phoneNumber": "0041609292894"
+    },
+    {
+      "id": "901a4652-a304-4e58-9923-cdf798704c80",
+      "name": "Cesar",
+      "surname": "Bermejo",
+      "address": "Paseo del Pinar 10, 1A, 16002 Cuenca, Spain",
+      "email": "cesar.berme@gmail.com",
+      "phoneNumber": "0034567893832"
+    },
+    {
+      "id": "1a83f3a5-97fd-4731-ad5f-31ccca09978f",
+      "name": "Maria Jose",
+      "surname": "Martinez",
+      "address": "Paseo de la Playa 48, 16001 Cuenca, Spain",
+      "email": "maria_jose.mart@gmail.com",
+      "phoneNumber": "0034567893831"
+    },
+    {
+      "id": "b6d1edf1-ddc3-434f-acd5-9c5ad6652c99",
+      "name": "Julia",
+      "surname": "Fernandez",
+      "address": "Calle Colon 41, 16001 Cuenca, Spain",
+      "email": "julia.fernandez@gmail.com",
+      "phoneNumber": "0034562893831"
+    },
+    {
+      "id": "666389c3-375d-4f32-8ede-bb2e9fab99fb",
+      "name": "Romina",
+      "surname": "Fernandez",
+      "address": "Calle Colon 41, 16001 Cuenca, Spain",
+      "email": "romina.fernandez@gmail.com",
+      "phoneNumber": "0034562892831"
+    },
+    {
+      "id": "ad0b2f02-61fd-4af3-ac25-6ab99614f346",
+      "name": "Estrella",
+      "surname": "Rojas",
+      "address": "Calle Maria Molina 3, 28044 Madrid, Spain",
+      "email": "estrella.rojas@gmail.com",
+      "phoneNumber": "0034562802831"
+    },
+    {
+      "id": "7fcf826a-2bff-45ba-833d-15676c8aabab",
+      "name": "Jesus",
+      "surname": "Del Pozo",
+      "address": "Calle Virgen del Pilas 37, 28044 Madrid, Spain",
+      "email": "jesus.pozo@gmail.com",
+      "phoneNumber": "0034562002831"
     }
   ]
 }

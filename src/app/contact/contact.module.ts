@@ -4,10 +4,17 @@ import { ContactComponent } from './contact.component';
 import { ContactRoutingModule } from './contact-routing.module';
 import { ContactService } from './contact.service';
 import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { NgModule } from '@angular/core';
 
 @NgModule({
-  imports: [AppBarModule, CommonModule, ContactRoutingModule, MatButtonModule],
+  imports: [
+    AppBarModule,
+    CommonModule,
+    ContactRoutingModule,
+    MatButtonModule,
+    MatExpansionModule,
+  ],
   declarations: [ContactComponent],
   providers: [ContactService],
   exports: [ContactComponent],
