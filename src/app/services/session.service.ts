@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 const CURRENT_SESSION = 'contact-list';
 const EXPIRATION_TIME = 86400000; // 1 day
 
-export interface SessionData {
+export interface Session {
   loginDate?: number;
 }
 
@@ -14,17 +14,17 @@ export interface SessionData {
   providedIn: 'root',
 })
 export class SessionService {
-  saveCurrentUserSession(data: SessionData) {
+  saveCurrentUserSession(data: Session) {
     sessionStorage.setItem(CURRENT_SESSION, JSON.stringify(data));
   }
 
-  getCurrentUserSession(): SessionData | null {
+  getCurrentUserSession(): Session | null {
     const storage = sessionStorage.getItem(CURRENT_SESSION);
     if (!storage) {
       return null;
     }
 
-    const session: SessionData = JSON.parse(storage);
+    const session: Session = JSON.parse(storage);
 
     if (this.hasSessionExpired(session)) {
       this.deleteCurrentUserSession();
@@ -38,7 +38,7 @@ export class SessionService {
     sessionStorage.clear();
   }
 
-  private hasSessionExpired(session: SessionData): boolean {
+  private hasSessionExpired(session: Session): boolean {
     return session.loginDate + EXPIRATION_TIME < Date.now();
   }
 }

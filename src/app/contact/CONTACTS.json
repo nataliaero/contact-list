@@ -1,0 +1,60 @@
+{
+  "data": [
+    {
+      "id": "ebbe6b5e-6f0c-47ea-9713-8fd8e62cf3c4",
+      "name": "John",
+      "surname": "Smith",
+      "address": "84 Alfriston Gardens, Sholing, Southampton SO19 8FU, United Kingdom",
+      "email": "john.smith@gmail.com",
+      "phoneNumber": "0044629121344"
+    },
+    {
+      "id": "ac26d9c9-25e6-4cc3-9380-a94ff3c6902c",
+      "name": "Elsa",
+      "surname": "Doe",
+      "address": "Voyager Park South, Portfield Rd, Portsmouth PO3 5GG, United Kingdom",
+      "email": "elsa.foe@gmail.com",
+      "phoneNumber": "0044779121344"
+    },
+    {
+      "id": "541eb897-2615-4c94-b559-9f5cb05ed60e",
+      "name": "Robin",
+      "surname": "Hood",
+      "address": "Magdala Ave, London N19 5NF, United Kingdom",
+      "email": "robin.hood@gmail.com",
+      "phoneNumber": "0044123245678"
+    },
+    {
+      "id": "f3f700db-1c9c-4952-8643-077b68b65330",
+      "name": "Gloria",
+      "surname": "Gomez Marco",
+      "address": "Calle Nuria 59, 28034 Madrid, Spain",
+      "email": "gloria.gomez.marco@gmail.com",
+      "phoneNumber": "0034609887733"
+    },
+    {
+      "id": "929a8b26-2932-48c1-afdc-8f01b0820341",
+      "name": "Paula",
+      "surname": "Ortiz Marco",
+      "address": "Calle Velazquez 3, 28010 Madrid, Spain",
+      "email": "paula.ortiz1982@gmail.com",
+      "phoneNumber": "0034629886152"
+    },
+    {
+      "id": "38abe709-f7db-4ca0-a55f-e6c18a7bb980",
+      "name": "Marie",
+      "surname": "Gautierre",
+      "address": "26 Av. du Général de Gaulle, 93170 Bagnolet, France",
+      "email": "marieg1967@gmail.com",
+      "phoneNumber": "0039629886152"
+    },
+    {
+      "id": "22a30396-2d4d-4212-b38a-4b44447a13e0",
+      "name": "James",
+      "surname": "Donostierra",
+      "address": "6 Pl. des Bas Longchamps, 92200 Bagneux, France",
+      "email": "james.donos42@gmail.com",
+      "phoneNumber": "003978923476"
+    }
+  ]
+}

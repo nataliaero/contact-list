@@ -11,7 +11,6 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
     let session = this.sessionService.getCurrentUserSession();
-    console.log(session);
 
     if (!session) {
       this.goToHome();
