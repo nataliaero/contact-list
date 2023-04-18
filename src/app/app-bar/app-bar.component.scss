@@ -14,16 +14,14 @@
   color: $white;
   padding: $spacing * 2;
 
+  @media only screen and (max-width: 768px) {
+    justify-content: space-between;
+  }
+
   h3 {
     margin: 0;
     font-family: "Lobster";
     font-size: 28px;
-  }
-
-  img {
-    @media only screen and (max-width: 768px) {
-      display: none;
-    }
   }
 }
 
