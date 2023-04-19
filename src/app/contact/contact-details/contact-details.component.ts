@@ -6,7 +6,7 @@ import {
   Output,
 } from '@angular/core';
 
-import { Contact } from './contact.service';
+import { Contact } from '../contact.service';
 
 @Component({
   selector: 'app-contact-details-component',

@@ -1,8 +1,8 @@
 import { AppBarModule } from '../app-bar';
 import { CommonModule } from '@angular/common';
 import { ContactComponent } from './contact.component';
-import { ContactDetailsComponent } from './contact-details.component';
-import { ContactDialogComponent } from './contact-dialog.component';
+import { ContactDetailsComponent } from './contact-details/contact-details.component';
+import { ContactDialogComponent } from './contact-dialog/contact-dialog.component';
 import { ContactRoutingModule } from './contact-routing.module';
 import { ContactService } from './contact.service';
 import { FormsModule } from '@angular/forms';

@@ -1,8 +1,13 @@
-import { BehaviorSubject, take, tap } from 'rxjs';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { BehaviorSubject, Subject, take, takeUntil, tap } from 'rxjs';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { Contact, ContactService } from './contact.service';
 
-import { ContactDialogComponent } from './contact-dialog.component';
+import { ContactDialogComponent } from './contact-dialog/contact-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -31,20 +36,21 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./contact.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContactComponent implements OnInit {
+export class ContactComponent implements OnInit, OnDestroy {
   constructor(
     private contactService: ContactService,
     public dialog: MatDialog
   ) {}
 
   contacts$ = new BehaviorSubject<Contact[]>([]);
+  private destroy$ = new Subject<void>();
 
   ngOnInit() {
     this.contactService
       .getContacts()
       .pipe(
-        take(1),
-        tap((list) => this.contacts$.next(list))
+        tap((list) => this.contacts$.next(list)),
+        takeUntil(this.destroy$)
       )
       .subscribe();
   }
@@ -55,5 +61,10 @@ export class ContactComponent implements OnInit {
 
   openAddContactDialog() {
     this.dialog.open(ContactDialogComponent);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
