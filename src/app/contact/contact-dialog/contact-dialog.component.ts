@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { ContactService } from '../contact.service';
+import { v4 as uuidv4 } from 'uuid';
+
 @Component({
   selector: 'app-contact-dialog-component',
   template: `
@@ -80,6 +83,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactDialogComponent {
+  constructor(private contactService: ContactService) {}
+
   addContactForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
     surname: new FormControl('', [Validators.required]),
@@ -112,5 +117,10 @@ export class ContactDialogComponent {
     if (this.addContactForm.invalid) {
       return;
     }
+
+    const contact = this.addContactForm.value;
+    contact.id = uuidv4();
+    console.log(contact);
+    this.contactService.addContact(contact);
   }
 }

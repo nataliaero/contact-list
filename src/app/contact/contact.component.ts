@@ -2,7 +2,7 @@ import { BehaviorSubject, take, tap } from 'rxjs';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Contact, ContactService } from './contact.service';
 
-import { ContactDialogComponent } from './contact-dialog.component';
+import { ContactDialogComponent } from './contact-dialog/contact-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
