@@ -2,7 +2,6 @@ import { BehaviorSubject, Observable, map, of, take } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import server from './CONTACTS.json';
-import { v4 as uuidv4 } from 'uuid';
 
 export interface Contact {
   id: string;
