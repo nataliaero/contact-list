@@ -120,7 +120,6 @@ export class ContactDialogComponent {
 
     const contact = this.addContactForm.value;
     contact.id = uuidv4();
-    console.log(contact);
     this.contactService.addContact(contact);
   }
 }
