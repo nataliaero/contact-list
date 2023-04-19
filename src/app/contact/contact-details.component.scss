@@ -1,0 +1,26 @@
+@import "../../theme/variables";
+:host {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.details-title {
+  font-weight: bolder;
+  color: $secondary;
+}
+
+.delete-action {
+  color: $secondary;
+  font-size: 30px;
+  margin-right: $spacing * 3;
+  cursor: pointer;
+}
+
+.delete-action:hover {
+  color: $secondary-dark;
+}
+
+.delete-action:active {
+  color: $secondary-darker;
+}
