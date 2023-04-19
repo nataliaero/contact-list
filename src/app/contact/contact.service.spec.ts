@@ -10,7 +10,6 @@ function setup() {
   });
 
   const service = TestBed.inject(ContactService);
-
   return { service };
 }
 
