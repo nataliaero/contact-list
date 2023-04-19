@@ -21,29 +21,17 @@ export class ContactService {
   getContacts(): Observable<Contact[]> {
     return this._contacts$
       .asObservable()
-      .pipe(map((list) => this.sortContact(list)));
+      .pipe(map((list) => sortContact(list)));
   }
 
-  private sortContact(list: Contact[]) {
-    return list.sort(function (a, b) {
-      if (a.surname.toLowerCase() < b.surname.toLowerCase()) {
-        return -1;
-      }
-      if (a.surname.toLowerCase() > b.surname.toLowerCase()) {
-        return 1;
-      }
-      return 0;
-    });
-  }
-
-  setContacts(contacts: Contact[]) {
+  private setContacts(contacts: Contact[]) {
     this._contacts$.next(contacts);
   }
 
   addContact(contact: Contact) {
     const list = this._contacts$.value;
     list.push(contact);
-    const sortedList = this.sortContact(list);
+    const sortedList = sortContact(list);
     this.setContacts(sortedList);
   }
 
@@ -55,4 +43,16 @@ export class ContactService {
     }
     this.setContacts(list);
   }
+}
+
+function sortContact(list: Contact[]) {
+  return list.sort(function (a, b) {
+    if (a.surname.toLowerCase() < b.surname.toLowerCase()) {
+      return -1;
+    }
+    if (a.surname.toLowerCase() > b.surname.toLowerCase()) {
+      return 1;
+    }
+    return 0;
+  });
 }
