@@ -1,0 +1,47 @@
+@import "../../theme/variables";
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+::ng-deep .mat-dialog-container {
+  min-width: 500px;
+
+  @media only screen and (max-width: 768px) {
+    min-width: 80vw;
+  }
+}
+
+.close-dialog {
+  align-self: flex-end;
+  margin-bottom: $spacing;
+  padding: 0;
+  min-height: 0;
+
+  button {
+    padding: 0;
+    min-width: 0;
+  }
+}
+
+.dialog-title {
+  font-family: "Josefin Sans";
+  color: $secondary;
+}
+
+.dialog-content {
+  font-family: "Josefin Sans";
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.login-button {
+  padding: $spacing;
+  cursor: pointer;
+  margin: $spacing * 2;
+  border-radius: $spacing;
+}
