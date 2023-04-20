@@ -1,3 +1,5 @@
+import { BehaviorSubject, Observable } from 'rxjs';
+
 import { Injectable } from '@angular/core';
 
 const CURRENT_SESSION = 'contact-list';
@@ -14,28 +16,35 @@ export interface Session {
   providedIn: 'root',
 })
 export class SessionService {
+  private sessionSubject = new BehaviorSubject<Session | null>(null);
+
   saveCurrentUserSession(data: Session) {
     sessionStorage.setItem(CURRENT_SESSION, JSON.stringify(data));
+    this.sessionSubject.next(data);
   }
 
-  getCurrentUserSession(): Session | null {
+  getCurrentUserSession(): Observable<Session | null> {
     const storage = sessionStorage.getItem(CURRENT_SESSION);
     if (!storage) {
-      return null;
+      this.sessionSubject.next(null);
+      return this.sessionSubject.asObservable();
     }
 
     const session: Session = JSON.parse(storage);
 
     if (this.hasSessionExpired(session)) {
       this.deleteCurrentUserSession();
-      return null;
+      this.sessionSubject.next(null);
+    } else {
+      this.sessionSubject.next(JSON.parse(storage));
     }
 
-    return JSON.parse(storage);
+    return this.sessionSubject.asObservable();
   }
 
   deleteCurrentUserSession() {
     sessionStorage.clear();
+    this.sessionSubject.next(null);
   }
 
   private hasSessionExpired(session: Session): boolean {

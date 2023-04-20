@@ -1,5 +1,5 @@
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import { SessionService } from '../services';
@@ -10,13 +10,14 @@ export class AuthGuard implements CanActivate {
   constructor(private router: Router, private sessionService: SessionService) {}
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
-    let session = this.sessionService.getCurrentUserSession();
-
-    if (!session) {
-      this.goToHome();
-    }
-
-    return of(!isNil(session));
+    return this.sessionService.getCurrentUserSession().pipe(
+      map((session) => {
+        if (!session) {
+          this.goToHome();
+        }
+        return !isNil(session);
+      })
+    );
   }
 
   private goToHome() {

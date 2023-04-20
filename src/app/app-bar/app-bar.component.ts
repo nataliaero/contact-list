@@ -1,10 +1,10 @@
+import { AuthorizationService, SessionService } from '../services';
+import { BehaviorSubject, take, tap } from 'rxjs';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
-import { BehaviorSubject } from 'rxjs';
 import { LoginDialogComponent } from '../login-dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { SessionService } from '../services';
 
 @Component({
   selector: 'app-bar',
@@ -21,6 +21,7 @@ import { SessionService } from '../services';
 })
 export class AppBarComponent implements OnInit {
   constructor(
+    private authorizationService: AuthorizationService,
     public dialog: MatDialog,
     private sessionService: SessionService,
     private router: Router
@@ -32,11 +33,17 @@ export class AppBarComponent implements OnInit {
   buttonText$ = new BehaviorSubject<string>(this.login);
 
   ngOnInit() {
-    const text = this.sessionService.getCurrentUserSession()
-      ? this.logout
-      : this.login;
-
-    this.buttonText$.next(text);
+    console.log(this.buttonText$.value);
+    this.sessionService
+      .getCurrentUserSession()
+      .pipe(
+        take(1),
+        tap((session) => {
+          const text = session ? this.logout : this.login;
+          this.buttonText$.next(text);
+        })
+      )
+      .subscribe();
   }
 
   openLoginDialog() {
@@ -49,13 +56,11 @@ export class AppBarComponent implements OnInit {
 
   onButtonClick() {
     if (this.buttonText$.value === this.login) {
-      this.sessionService.saveCurrentUserSession({ loginDate: Date.now() });
-      this.openLoginDialog();
       this.buttonText$.next(this.logout);
+      this.openLoginDialog();
     } else {
-      this.sessionService.deleteCurrentUserSession();
+      this.authorizationService.logout();
       this.buttonText$.next(this.login);
-      this.router.navigate(['/home']);
     }
   }
 }
