@@ -28,20 +28,24 @@ export class ContactService {
     this._contacts$.next(contacts);
   }
 
-  addContact(contact: Contact) {
+  addContact(contact: Contact): Observable<boolean> {
     const list = this._contacts$.value;
     list.push(contact);
     const sortedList = sortContact(list);
     this.setContacts(sortedList);
+
+    return of(true);
   }
 
-  deleteContact(id: string) {
+  deleteContact(id: string): Observable<boolean> {
     const list = this._contacts$.value;
     const indexToRemove = list.findIndex((el) => el.id === id);
     if (indexToRemove > -1) {
       list.splice(indexToRemove, 1);
     }
     this.setContacts(list);
+
+    return of(true);
   }
 }
 
