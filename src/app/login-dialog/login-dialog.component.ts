@@ -71,5 +71,6 @@ export class LoginDialogComponent {
 
   login() {
     this.router.navigate(['/contacts']);
+    this.data.closeCallback();
   }
 }
