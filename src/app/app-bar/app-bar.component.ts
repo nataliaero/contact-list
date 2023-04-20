@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs';
+import { LoginDialogComponent } from '../login-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SessionService } from '../services';
 
@@ -18,7 +20,11 @@ import { SessionService } from '../services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppBarComponent implements OnInit {
-  constructor(private sessionService: SessionService, private router: Router) {}
+  constructor(
+    public dialog: MatDialog,
+    private sessionService: SessionService,
+    private router: Router
+  ) {}
 
   login = 'LOGIN';
   logout = 'LOGOUT';
@@ -33,11 +39,19 @@ export class AppBarComponent implements OnInit {
     this.buttonText$.next(text);
   }
 
+  openLoginDialog() {
+    this.dialog.open(LoginDialogComponent, {
+      data: {
+        closeCallback: () => this.dialog.closeAll(),
+      },
+    });
+  }
+
   onButtonClick() {
     if (this.buttonText$.value === this.login) {
       this.sessionService.saveCurrentUserSession({ loginDate: Date.now() });
+      this.openLoginDialog();
       this.buttonText$.next(this.logout);
-      this.router.navigate(['/contacts']);
     } else {
       this.sessionService.deleteCurrentUserSession();
       this.buttonText$.next(this.login);
