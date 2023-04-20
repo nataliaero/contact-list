@@ -9,6 +9,7 @@ import { Contact, ContactService } from './contact.service';
 
 import { ContactDialogComponent } from './contact-dialog/contact-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-contact-component',
@@ -39,7 +40,8 @@ import { MatDialog } from '@angular/material/dialog';
 export class ContactComponent implements OnInit, OnDestroy {
   constructor(
     private contactService: ContactService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   contacts$ = new BehaviorSubject<Contact[]>([]);
@@ -56,11 +58,28 @@ export class ContactComponent implements OnInit, OnDestroy {
   }
 
   onDeleteContact(id: string) {
-    this.contactService.deleteContact(id);
+    this.contactService
+      .deleteContact(id)
+      .pipe(
+        take(1),
+        tap((res) => {
+          const message = res
+            ? 'Contact deleted successfully'
+            : 'Contact deletion failed. Please try again.';
+          this.snackBar.open(message, 'Close', {
+            duration: 3000,
+          });
+        })
+      )
+      .subscribe();
   }
 
   openAddContactDialog() {
-    this.dialog.open(ContactDialogComponent);
+    this.dialog.open(ContactDialogComponent, {
+      data: {
+        closeCallback: () => this.dialog.closeAll(),
+      },
+    });
   }
 
   ngOnDestroy() {

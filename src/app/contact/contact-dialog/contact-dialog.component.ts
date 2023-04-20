@@ -1,8 +1,15 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ContactService } from '../contact.service';
 import { v4 as uuidv4 } from 'uuid';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { take, tap } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+export interface DialogData {
+  closeCallback: () => void;
+}
 
 @Component({
   selector: 'app-contact-dialog-component',
@@ -83,7 +90,11 @@ import { v4 as uuidv4 } from 'uuid';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactDialogComponent {
-  constructor(private contactService: ContactService) {}
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private contactService: ContactService,
+    private snackBar: MatSnackBar
+  ) {}
 
   addContactForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -120,6 +131,20 @@ export class ContactDialogComponent {
 
     const contact = this.addContactForm.value;
     contact.id = uuidv4();
-    this.contactService.addContact(contact);
+    this.contactService
+      .addContact(contact)
+      .pipe(
+        take(1),
+        tap((res) => {
+          const message = res
+            ? 'New contact added successfully'
+            : 'Adding a new contact failed. Please try again.';
+          this.snackBar.open(message, 'Close', {
+            duration: 3000,
+          });
+          this.data.closeCallback();
+        })
+      )
+      .subscribe();
   }
 }
