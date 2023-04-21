@@ -1,5 +1,6 @@
-import { BehaviorSubject, Observable, map, of, take } from 'rxjs';
+import { BehaviorSubject, Observable, map, of } from 'rxjs';
 
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import server from './CONTACTS.json';
 
@@ -12,16 +13,27 @@ export interface Contact {
   email: string;
 }
 
+const CONTACT_API = 'https://my.api.mockaroo.com/contacts.json';
+
 @Injectable()
 export class ContactService {
+  constructor(private http: HttpClient) {}
+
   contacts: Contact[] = server.data;
 
   private _contacts$ = new BehaviorSubject<Contact[]>(server.data);
 
   getContacts(): Observable<Contact[]> {
-    return this._contacts$
-      .asObservable()
-      .pipe(map((list) => sortContact(list)));
+    return this.http
+      .get<Contact[]>(CONTACT_API, {
+        headers: { 'X-API-Key': '6a2ea9f0' },
+      })
+      .pipe(
+        map((res) => {
+          console.log(res);
+          return sortContact(res);
+        })
+      );
   }
 
   private setContacts(contacts: Contact[]) {

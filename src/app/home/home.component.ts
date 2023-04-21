@@ -1,5 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { take, tap } from 'rxjs';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { Subject, take, takeUntil, tap } from 'rxjs';
 
 import { Router } from '@angular/router';
 import { SessionService } from '../services';
@@ -17,14 +22,16 @@ import { SessionService } from '../services';
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   constructor(private sessionService: SessionService, private router: Router) {}
+
+  private destroy$ = new Subject<void>();
 
   ngOnInit() {
     this.sessionService
       .getCurrentUserSession()
       .pipe(
-        take(1),
+        takeUntil(this.destroy$),
         tap((session) => {
           if (session) {
             this.router.navigate(['contacts']);
@@ -32,5 +39,10 @@ export class HomeComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
