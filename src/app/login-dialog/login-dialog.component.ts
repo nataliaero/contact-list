@@ -20,7 +20,11 @@ export interface DialogData {
     </mat-dialog-actions>
     <h2 mat-dialog-title class="dialog-title">Login</h2>
     <mat-dialog-content class="dialog-content">
-      <form [formGroup]="loginContactForm" (ngSubmit)="login()">
+      <form
+        [formGroup]="loginContactForm"
+        (ngSubmit)="login()"
+        (keydown.enter)="login()"
+      >
         <mat-form-field class="form-field">
           <input
             matInput
@@ -85,10 +89,10 @@ export class LoginDialogComponent {
       .pipe(
         take(1),
         tap((res) => {
-          if (!res) {
-            this.data.closeCallback();
+          if (res?.['error']) {
+            this.loginError$.next(res['error']);
           } else {
-            this.loginError$.next(res.error);
+            this.data.closeCallback();
           }
         })
       )

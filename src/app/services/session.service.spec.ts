@@ -3,17 +3,13 @@ import { Session, SessionService } from './session.service';
 import { TestBed } from '@angular/core/testing';
 import { firstValueFrom } from 'rxjs';
 
-const dateConstructor = Date;
-const UTC_PRESENT_DATE = Date.parse('January 1, 2020 00:00:00');
-const PRESENT_DATE = new Date(UTC_PRESENT_DATE);
-
 function setup() {
   TestBed.configureTestingModule({
     providers: [SessionService],
   });
 
   const service = TestBed.inject(SessionService);
-  global.Date.now = jest.fn(() => PRESENT_DATE.getTime());
+
   return { service };
 }
 
@@ -24,7 +20,6 @@ describe('SessionService', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
-    global.Date = dateConstructor;
   });
 
   describe('saveCurrentUserSession()', () => {
@@ -32,7 +27,8 @@ describe('SessionService', () => {
       const { service } = setup();
 
       const session: Session = {
-        loginDate: Date.now(),
+        accessToken: '1234-5678',
+        expiresIn: 3600,
       };
 
       service.saveCurrentUserSession(session);
@@ -42,7 +38,8 @@ describe('SessionService', () => {
       );
 
       expect(savedSession).toEqual({
-        loginDate: UTC_PRESENT_DATE,
+        accessToken: '1234-5678',
+        expiresIn: 3600,
       });
     });
   });
@@ -57,30 +54,19 @@ describe('SessionService', () => {
       expect(savedSession).toEqual(null);
     });
 
-    test('should return the session if it has not expired', async () => {
+    test('should return the session if exists', async () => {
       window.sessionStorage.setItem(
         'contact-list',
-        JSON.stringify({ loginDate: Date.now() })
+        JSON.stringify({ accessToken: '1234-5678', expiresIn: 3600 })
       );
       const { service } = setup();
       const savedSession = await firstValueFrom(
         service.getCurrentUserSession()
       );
-      expect(savedSession).toEqual({ loginDate: Date.now() });
-    });
-
-    test('should return null if the session has expired', async () => {
-      const UTC_PAST_DATE = Date.parse('January 1, 2019 00:00:00');
-
-      window.sessionStorage.setItem(
-        'contact-list',
-        JSON.stringify({ loginDate: UTC_PAST_DATE })
-      );
-      const { service } = setup();
-      const savedSession = await firstValueFrom(
-        service.getCurrentUserSession()
-      );
-      expect(savedSession).toEqual(null);
+      expect(savedSession).toEqual({
+        accessToken: '1234-5678',
+        expiresIn: 3600,
+      });
     });
   });
 });
