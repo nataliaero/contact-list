@@ -65,7 +65,10 @@ export class SessionService {
     this.sessionSubject.next(null);
   }
 
-  private hasSessionExpired(session: Session): boolean {
+  private hasSessionExpired(session: Session | null): boolean {
+    if (!session) {
+      return false;
+    }
     return session.loginDate + EXPIRATION_TIME < Date.now();
   }
 }
