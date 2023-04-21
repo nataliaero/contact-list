@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 
@@ -24,6 +24,19 @@ export class SessionService {
   }
 
   getCurrentUserSession(): Observable<Session | null> {
+    return this.sessionSubject.asObservable().pipe(
+      map((session) => {
+        if (this.hasSessionExpired(session)) {
+          this.deleteCurrentUserSession();
+          return null;
+        }
+
+        return session;
+      })
+    );
+  }
+
+  getCurrentUserSession2(): Observable<Session | null> {
     const storage = sessionStorage.getItem(CURRENT_SESSION);
     if (!storage) {
       this.sessionSubject.next(null);

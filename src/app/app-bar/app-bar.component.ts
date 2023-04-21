@@ -1,10 +1,14 @@
 import { AuthorizationService, SessionService } from '../services';
-import { BehaviorSubject, take, tap } from 'rxjs';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { BehaviorSubject, Subject, takeUntil, tap } from 'rxjs';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 
 import { LoginDialogComponent } from '../login-dialog';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bar',
@@ -19,25 +23,24 @@ import { Router } from '@angular/router';
   styleUrls: ['./app-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppBarComponent implements OnInit {
+export class AppBarComponent implements OnInit, OnDestroy {
   constructor(
     private authorizationService: AuthorizationService,
     public dialog: MatDialog,
-    private sessionService: SessionService,
-    private router: Router
+    private sessionService: SessionService
   ) {}
 
   login = 'LOGIN';
   logout = 'LOGOUT';
 
   buttonText$ = new BehaviorSubject<string>(this.login);
+  private destroy$ = new Subject<void>();
 
   ngOnInit() {
-    console.log(this.buttonText$.value);
     this.sessionService
       .getCurrentUserSession()
       .pipe(
-        take(1),
+        takeUntil(this.destroy$),
         tap((session) => {
           const text = session ? this.logout : this.login;
           this.buttonText$.next(text);
@@ -56,11 +59,14 @@ export class AppBarComponent implements OnInit {
 
   onButtonClick() {
     if (this.buttonText$.value === this.login) {
-      this.buttonText$.next(this.logout);
       this.openLoginDialog();
     } else {
       this.authorizationService.logout();
-      this.buttonText$.next(this.login);
     }
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
