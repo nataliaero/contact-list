@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { take, tap } from 'rxjs';
 
 import { Router } from '@angular/router';
 import { SessionService } from '../services';
@@ -20,10 +21,16 @@ export class HomeComponent implements OnInit {
   constructor(private sessionService: SessionService, private router: Router) {}
 
   ngOnInit() {
-    const session = this.sessionService.getCurrentUserSession();
-
-    if (session) {
-      this.router.navigate(['contacts']);
-    }
+    this.sessionService
+      .getCurrentUserSession()
+      .pipe(
+        take(1),
+        tap((session) => {
+          if (session) {
+            this.router.navigate(['contacts']);
+          }
+        })
+      )
+      .subscribe();
   }
 }

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { AuthorizationService } from '../services';
 
 export interface DialogData {
   closeCallback: () => void;
@@ -52,6 +53,7 @@ export interface DialogData {
 })
 export class LoginDialogComponent {
   constructor(
+    private authorizationService: AuthorizationService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private router: Router
   ) {}
@@ -70,7 +72,7 @@ export class LoginDialogComponent {
   }
 
   login() {
-    this.router.navigate(['/contacts']);
+    this.authorizationService.login();
     this.data.closeCallback();
   }
 }

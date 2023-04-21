@@ -1,10 +1,14 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AuthorizationService, SessionService } from '../services';
+import { BehaviorSubject, Subject, takeUntil, tap } from 'rxjs';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 
-import { BehaviorSubject } from 'rxjs';
 import { LoginDialogComponent } from '../login-dialog';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { SessionService } from '../services';
 
 @Component({
   selector: 'app-bar',
@@ -19,24 +23,30 @@ import { SessionService } from '../services';
   styleUrls: ['./app-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppBarComponent implements OnInit {
+export class AppBarComponent implements OnInit, OnDestroy {
   constructor(
+    private authorizationService: AuthorizationService,
     public dialog: MatDialog,
-    private sessionService: SessionService,
-    private router: Router
+    private sessionService: SessionService
   ) {}
 
   login = 'LOGIN';
   logout = 'LOGOUT';
 
   buttonText$ = new BehaviorSubject<string>(this.login);
+  private destroy$ = new Subject<void>();
 
   ngOnInit() {
-    const text = this.sessionService.getCurrentUserSession()
-      ? this.logout
-      : this.login;
-
-    this.buttonText$.next(text);
+    this.sessionService
+      .getCurrentUserSession()
+      .pipe(
+        takeUntil(this.destroy$),
+        tap((session) => {
+          const text = session ? this.logout : this.login;
+          this.buttonText$.next(text);
+        })
+      )
+      .subscribe();
   }
 
   openLoginDialog() {
@@ -49,13 +59,14 @@ export class AppBarComponent implements OnInit {
 
   onButtonClick() {
     if (this.buttonText$.value === this.login) {
-      this.sessionService.saveCurrentUserSession({ loginDate: Date.now() });
       this.openLoginDialog();
-      this.buttonText$.next(this.logout);
     } else {
-      this.sessionService.deleteCurrentUserSession();
-      this.buttonText$.next(this.login);
-      this.router.navigate(['/home']);
+      this.authorizationService.logout();
     }
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
