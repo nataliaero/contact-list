@@ -18,6 +18,11 @@ export interface Session {
 export class SessionService {
   private sessionSubject = new BehaviorSubject<Session | null>(null);
 
+  constructor() {
+    const storage = sessionStorage.getItem(CURRENT_SESSION);
+    this.sessionSubject.next(JSON.parse(storage));
+  }
+
   saveCurrentUserSession(data: Session) {
     sessionStorage.setItem(CURRENT_SESSION, JSON.stringify(data));
     this.sessionSubject.next(data);
@@ -60,7 +65,10 @@ export class SessionService {
     this.sessionSubject.next(null);
   }
 
-  private hasSessionExpired(session: Session): boolean {
+  private hasSessionExpired(session: Session | null): boolean {
+    if (!session) {
+      return false;
+    }
     return session.loginDate + EXPIRATION_TIME < Date.now();
   }
 }

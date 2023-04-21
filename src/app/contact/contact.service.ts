@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable, map, of, take } from 'rxjs';
+import { BehaviorSubject, Observable, delay, map, of } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import server from './CONTACTS.json';
@@ -19,9 +19,10 @@ export class ContactService {
   private _contacts$ = new BehaviorSubject<Contact[]>(server.data);
 
   getContacts(): Observable<Contact[]> {
-    return this._contacts$
-      .asObservable()
-      .pipe(map((list) => sortContact(list)));
+    return this._contacts$.asObservable().pipe(
+      delay(1000),
+      map((list) => sortContact(list))
+    );
   }
 
   private setContacts(contacts: Contact[]) {

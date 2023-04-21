@@ -1,6 +1,7 @@
 import { Session, SessionService } from './session.service';
 
 import { TestBed } from '@angular/core/testing';
+import { firstValueFrom } from 'rxjs';
 
 const dateConstructor = Date;
 const UTC_PRESENT_DATE = Date.parse('January 1, 2020 00:00:00');
@@ -36,7 +37,9 @@ describe('SessionService', () => {
 
       service.saveCurrentUserSession(session);
 
-      const savedSession = service.getCurrentUserSession();
+      const savedSession = await firstValueFrom(
+        service.getCurrentUserSession()
+      );
 
       expect(savedSession).toEqual({
         loginDate: UTC_PRESENT_DATE,
@@ -48,7 +51,9 @@ describe('SessionService', () => {
     test('should return null if there is no session', async () => {
       window.sessionStorage.clear();
       const { service } = setup();
-      const savedSession = service.getCurrentUserSession();
+      const savedSession = await firstValueFrom(
+        service.getCurrentUserSession()
+      );
       expect(savedSession).toEqual(null);
     });
 
@@ -58,7 +63,9 @@ describe('SessionService', () => {
         JSON.stringify({ loginDate: Date.now() })
       );
       const { service } = setup();
-      const savedSession = service.getCurrentUserSession();
+      const savedSession = await firstValueFrom(
+        service.getCurrentUserSession()
+      );
       expect(savedSession).toEqual({ loginDate: Date.now() });
     });
 
@@ -70,7 +77,9 @@ describe('SessionService', () => {
         JSON.stringify({ loginDate: UTC_PAST_DATE })
       );
       const { service } = setup();
-      const savedSession = service.getCurrentUserSession();
+      const savedSession = await firstValueFrom(
+        service.getCurrentUserSession()
+      );
       expect(savedSession).toEqual(null);
     });
   });

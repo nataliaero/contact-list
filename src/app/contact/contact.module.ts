@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -24,6 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatExpansionModule,
     FormsModule,
     MatInputModule,
+    MatProgressSpinnerModule,
     MatSnackBarModule,
     ReactiveFormsModule,
   ],

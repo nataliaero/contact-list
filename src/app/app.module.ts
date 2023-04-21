@@ -7,7 +7,7 @@ import { NgModule } from '@angular/core';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule],
+  imports: [AppRoutingModule, BrowserAnimationsModule, BrowserModule],
   providers: [AuthGuard],
   bootstrap: [AppComponent],
 })
