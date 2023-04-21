@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthorizationService } from '../services';
+import { BehaviorSubject, take, tap } from 'rxjs';
 
 export interface DialogData {
   closeCallback: () => void;
@@ -41,6 +42,7 @@ export interface DialogData {
             >Password is required</mat-error
           >
         </mat-form-field>
+        <mat-error *ngIf="loginError$ | async as error">{{ error }}</mat-error>
 
         <button class="login-button" [disabled]="!this.loginContactForm.valid">
           Login
@@ -71,8 +73,24 @@ export class LoginDialogComponent {
     return this.loginContactForm.get('password') as FormControl;
   }
 
+  loginError$ = new BehaviorSubject<string | null>(null);
+
   login() {
-    this.authorizationService.login();
-    this.data.closeCallback();
+    this.authorizationService
+      .login(
+        this.loginContactForm.value.username,
+        this.loginContactForm.value.password
+      )
+      .pipe(
+        take(1),
+        tap((res) => {
+          if (!res) {
+            this.data.closeCallback();
+          } else {
+            this.loginError$.next(res.error);
+          }
+        })
+      )
+      .subscribe();
   }
 }
