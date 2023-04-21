@@ -35,6 +35,7 @@ export interface DialogData {
         <mat-form-field class="form-field">
           <input
             matInput
+            type="password"
             [formControl]="passwordFormControl"
             placeholder="Password"
           />

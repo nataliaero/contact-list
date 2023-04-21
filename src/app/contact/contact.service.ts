@@ -3,6 +3,8 @@ import { BehaviorSubject, Observable, delay, map, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import server from './CONTACTS.json';
 
+const ERROR_PROBABILITY = 5;
+
 export interface Contact {
   id: string;
   name: string;
@@ -10,6 +12,10 @@ export interface Contact {
   phoneNumber: string;
   address: string;
   email: string;
+}
+
+export interface ErrorMessage {
+  error: string;
 }
 
 @Injectable()
@@ -29,16 +35,28 @@ export class ContactService {
     this._contacts$.next(contacts);
   }
 
-  addContact(contact: Contact): Observable<boolean> {
+  addContact(contact: Contact): Observable<ErrorMessage | null> {
+    const randomInt = getRandomInt(10);
+
+    if (randomInt > ERROR_PROBABILITY) {
+      return of({ error: 'Adding a new contact failed. Please try again.' });
+    }
+
     const list = this._contacts$.value;
     list.push(contact);
     const sortedList = sortContact(list);
     this.setContacts(sortedList);
 
-    return of(true);
+    return of(null);
   }
 
-  deleteContact(id: string): Observable<boolean> {
+  deleteContact(id: string): Observable<ErrorMessage | null> {
+    const randomInt = getRandomInt(10);
+
+    if (randomInt > ERROR_PROBABILITY) {
+      return of({ error: 'Contact deletion failed. Please try again.' });
+    }
+
     const list = this._contacts$.value;
     const indexToRemove = list.findIndex((el) => el.id === id);
     if (indexToRemove > -1) {
@@ -46,7 +64,7 @@ export class ContactService {
     }
     this.setContacts(list);
 
-    return of(true);
+    return of(null);
   }
 }
 
@@ -60,4 +78,8 @@ function sortContact(list: Contact[]) {
     }
     return 0;
   });
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
 }

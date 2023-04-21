@@ -41,10 +41,18 @@ describe('ContactService', () => {
         address: "John's St Andrews House",
       };
 
-      service.addContact(newContact);
-      const contacts = await firstValueFrom(service.getContacts());
-      expect(contacts[0].surname).toBe('Albert');
-      expect(contacts[1].surname).toBe('Bardor');
+      const resultAdding = await firstValueFrom(service.addContact(newContact));
+
+      if (!resultAdding) {
+        const contacts = await firstValueFrom(service.getContacts());
+
+        expect(contacts[0].surname).toBe('Albert');
+        expect(contacts[1].surname).toBe('Bardor');
+      } else {
+        expect(resultAdding.error).toBe(
+          'Adding a new contact failed. Please try again.'
+        );
+      }
     });
   });
 
@@ -58,12 +66,20 @@ describe('ContactService', () => {
       );
 
       const id = '929a8b26-2932-48c1-afdc-8f01b0820341';
-      service.deleteContact(id);
+      const resultDeletion = await firstValueFrom(service.deleteContact(id));
 
-      const contactsAfterDeletion = await firstValueFrom(service.getContacts());
-      expect(contactsAfterDeletion.findIndex((el) => el.name === 'Paula')).toBe(
-        -1
-      );
+      if (!resultDeletion) {
+        const contactsAfterDeletion = await firstValueFrom(
+          service.getContacts()
+        );
+        expect(
+          contactsAfterDeletion.findIndex((el) => el.name === 'Paula')
+        ).toBe(-1);
+      } else {
+        expect(resultDeletion.error).toBe(
+          'Contact deletion failed. Please try again.'
+        );
+      }
     });
   });
 });

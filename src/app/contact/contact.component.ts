@@ -76,8 +76,8 @@ export class ContactComponent implements OnInit, OnDestroy {
         take(1),
         tap((res) => {
           const message = res
-            ? 'Contact deleted successfully'
-            : 'Contact deletion failed. Please try again.';
+            ? `⚠️  ${res.error}`
+            : '✅  Contact deleted successfully';
           this.snackBar.open(message, 'Close', {
             duration: 3000,
           });
