@@ -137,8 +137,8 @@ export class ContactDialogComponent {
         take(1),
         tap((res) => {
           const message = res
-            ? 'New contact added successfully'
-            : 'Adding a new contact failed. Please try again.';
+            ? `⚠️ ${res.error}`
+            : '✅ New contact added successfully';
           this.snackBar.open(message, 'Close', {
             duration: 3000,
           });
