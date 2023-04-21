@@ -37,17 +37,6 @@ export class SessionService {
     return this.sessionSubject.asObservable();
   }
 
-  getCurrentUserSession2(): Observable<Session | null> {
-    const storage = sessionStorage.getItem(CURRENT_SESSION);
-    if (!storage) {
-      this.sessionSubject.next(null);
-      return this.sessionSubject.asObservable();
-    }
-
-    this.sessionSubject.next(JSON.parse(storage));
-    return this.sessionSubject.asObservable();
-  }
-
   deleteCurrentUserSession() {
     sessionStorage.clear();
     this.sessionSubject.next(null);

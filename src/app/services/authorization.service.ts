@@ -4,9 +4,6 @@ import { Session, SessionError, SessionService } from './session.service';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-const USERNAME = 'john_doe';
-const PASSWORD = 'Pass1234';
-
 /**
  * Service for authorization features
  */
@@ -20,7 +17,10 @@ export class AuthorizationService {
     username: string,
     password: string
   ): Observable<Session | SessionError> {
-    if (username === USERNAME && password === PASSWORD) {
+    // ********************************
+    // Retrieve JWT from server
+
+    if (username === 'john_doe' && password === 'Pass1234') {
       const session = {
         accessToken:
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
